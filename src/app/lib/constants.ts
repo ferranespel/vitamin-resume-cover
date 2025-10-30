@@ -13,4 +13,4 @@ const A4_HEIGHT_PT = 842;
 export const A4_WIDTH_PX = A4_WIDTH_PT * PX_PER_PT;
 export const A4_HEIGHT_PX = A4_HEIGHT_PT * PX_PER_PT;
 
-export const DEBUG_RESUME_PDF_FLAG: true | undefined = undefined; // use undefined to disable to deal with a weird error message
+export const DEBUG_RESUME_PDF_FLAG: true | undefined = true; // use undefined to disable to deal with a weird error message
