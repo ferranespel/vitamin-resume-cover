@@ -4,6 +4,7 @@ import type {
   FeaturedSkill,
   Resume,
   ResumeEducation,
+  ResumeLanguages,
   ResumeProfile,
   ResumeProject,
   ResumeSkills,
@@ -50,6 +51,10 @@ export const initialSkills: ResumeSkills = {
   descriptions: [],
 };
 
+export const initialLanguages: ResumeLanguages = {
+  featuredLanguages: Array(6).fill({ ...initialFeaturedSkill }),
+};
+
 export const initialCustom = {
   descriptions: [],
 };
@@ -60,6 +65,7 @@ export const initialResumeState: Resume = {
   educations: [initialEducation],
   projects: [initialProject],
   skills: initialSkills,
+  languages: initialLanguages,
   custom: initialCustom,
 };
 
@@ -134,6 +140,18 @@ export const resumeSlice = createSlice({
         featuredSkill.rating = rating;
       }
     },
+    changeLanguages: (
+      draft,
+      action: PayloadAction<{
+        field: "featuredLanguages";
+        idx: number;
+        skill: string;
+        rating: number;
+      }>
+    ) => {
+      const { idx, skill, rating } = action.payload;
+      draft.languages.featuredLanguages[idx] = { skill, rating };
+    },
     changeCustom: (
       draft,
       action: PayloadAction<{ field: "descriptions"; value: string[] }>
@@ -206,6 +224,7 @@ export const {
   changeEducations,
   changeProjects,
   changeSkills,
+  changeLanguages,
   changeCustom,
   addSectionInForm,
   moveSectionInForm,
@@ -220,6 +239,7 @@ export const selectWorkExperiences = (state: RootState) =>
 export const selectEducations = (state: RootState) => state.resume.educations;
 export const selectProjects = (state: RootState) => state.resume.projects;
 export const selectSkills = (state: RootState) => state.resume.skills;
+export const selectLanguages = (state: RootState) => state.resume.languages;
 export const selectCustom = (state: RootState) => state.resume.custom;
 
 export default resumeSlice.reducer;

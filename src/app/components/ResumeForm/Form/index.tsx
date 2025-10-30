@@ -20,6 +20,7 @@ import {
   AcademicCapIcon,
   LightBulbIcon,
   WrenchIcon,
+  LanguageIcon,
   PlusSmallIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -51,6 +52,7 @@ const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
   educations: AcademicCapIcon,
   projects: LightBulbIcon,
   skills: WrenchIcon,
+  languages: LanguageIcon,
   custom: WrenchIcon,
 };
 

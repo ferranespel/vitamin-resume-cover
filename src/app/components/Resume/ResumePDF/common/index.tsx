@@ -9,13 +9,16 @@ export const ResumePDFSection = ({
   heading,
   style = {},
   children,
+  break: shouldBreak,
 }: {
   themeColor?: string;
   heading?: string;
   style?: Style;
   children: React.ReactNode;
+  break?: boolean;
 }) => (
   <View
+    break={shouldBreak}
     style={{
       ...styles.flexCol,
       gap: spacing["2"],

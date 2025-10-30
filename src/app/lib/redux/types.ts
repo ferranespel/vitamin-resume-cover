@@ -38,6 +38,10 @@ export interface ResumeSkills {
   descriptions: string[];
 }
 
+export interface ResumeLanguages {
+  featuredLanguages: FeaturedSkill[]; // Reutilizamos FeaturedSkill (tiene skill y rating)
+}
+
 export interface ResumeCustom {
   descriptions: string[];
 }
@@ -48,6 +52,7 @@ export interface Resume {
   educations: ResumeEducation[];
   projects: ResumeProject[];
   skills: ResumeSkills;
+  languages: ResumeLanguages;
   custom: ResumeCustom;
 }
 
