@@ -24,7 +24,7 @@ export const ResumePDFWorkExperience = ({
           idx > 0 && company === workExperiences[idx - 1].company;
 
         return (
-          <View key={idx} style={idx !== 0 ? { marginTop: spacing["2"] } : {}}>
+          <View key={idx} style={idx !== 0 ? { marginTop: spacing["4"] } : {}} wrap={false}>
             {!hideCompanyName && (
               <ResumePDFText bold={true}>{company}</ResumePDFText>
             )}

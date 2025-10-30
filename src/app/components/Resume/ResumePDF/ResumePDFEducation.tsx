@@ -18,17 +18,17 @@ export const ResumePDFEducation = ({
   themeColor: string;
   showBulletPoints: boolean;
 }) => {
-  return (
+return (
     <ResumePDFSection themeColor={themeColor} heading={heading}>
       {educations.map(
         ({ school, degree, date, gpa, descriptions = [] }, idx) => {
-          // Hide school name if it is the same as the previous school
           const hideSchoolName =
             idx > 0 && school === educations[idx - 1].school;
           const showDescriptions = descriptions.join() !== "";
+          const isFirst = idx === 0;
 
           return (
-            <View key={idx}>
+            <View key={idx} wrap={isFirst ? false : false}>
               {!hideSchoolName && (
                 <ResumePDFText bold={true}>{school}</ResumePDFText>
               )}
@@ -37,7 +37,7 @@ export const ResumePDFEducation = ({
                   ...styles.flexRowBetween,
                   marginTop: hideSchoolName
                     ? "-" + spacing["1"]
-                    : spacing["1.5"],
+                    : spacing["4"],
                 }}
               >
                 <ResumePDFText>{`${

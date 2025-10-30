@@ -19,12 +19,12 @@ export const ResumePDFSection = ({
     style={{
       ...styles.flexCol,
       gap: spacing["2"],
-      marginTop: spacing["5"],
+      marginTop: spacing["8"],
       ...style,
     }}
   >
     {heading && (
-      <View style={{ ...styles.flexRow, alignItems: "center" }}>
+      <View style={{ ...styles.flexRow, alignItems: "center" }} minPresenceAhead={100}>
         {themeColor && (
           <View
             style={{
@@ -33,15 +33,14 @@ export const ResumePDFSection = ({
               backgroundColor: themeColor,
               marginRight: spacing["3.5"],
             }}
-            debug={DEBUG_RESUME_PDF_FLAG}
           />
         )}
         <Text
           style={{
             fontWeight: "bold",
-            letterSpacing: "0.3pt", // tracking-wide -> 0.025em * 12 pt = 0.3pt
+            letterSpacing: "0.3pt",
+            fontSize: "18pt",  // Añade esto - más grande que el texto normal
           }}
-          debug={DEBUG_RESUME_PDF_FLAG}
         >
           {heading}
         </Text>
@@ -69,7 +68,6 @@ export const ResumePDFText = ({
         fontWeight: bold ? "bold" : "normal",
         ...style,
       }}
-      debug={DEBUG_RESUME_PDF_FLAG}
     >
       {children}
     </Text>
