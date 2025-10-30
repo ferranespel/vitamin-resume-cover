@@ -1,6 +1,7 @@
 {
-  "name": "open-resume",
-  "version": "0.1.0",
+  "name": "vitamine-resume-cover",
+  "version": "1.0.0",
+  "description": "Free Resume & Cover Letter Builder - Privacy-focused, open-source",
   "private": true,
   "scripts": {
     "dev": "next dev",
