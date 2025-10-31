@@ -14,6 +14,7 @@ import { SkillsForm } from "components/ResumeForm/SkillsForm";
 import { LanguagesForm } from "components/ResumeForm/LanguagesForm";
 import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
+import { SaveResumeButton } from "components/ResumeForm/SaveResumeButton"; // 👈 NUEVO IMPORT
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
 
@@ -49,6 +50,8 @@ export const ResumeForm = () => {
           return <Component key={form} />;
         })}
         <ThemeForm />
+        {/* 👇 NUEVO BOTÓN DE GUARDAR */}
+        <SaveResumeButton />
         <br />
       </section>
       <FlexboxSpacer maxWidth={50} className="hidden md:block" />

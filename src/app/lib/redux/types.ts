@@ -5,6 +5,7 @@ export interface ResumeProfile {
   url: string;
   summary: string;
   location: string;
+  resumeName: string;  // 👈 NUEVO CAMPO
 }
 
 export interface ResumeWorkExperience {
@@ -54,6 +55,16 @@ export interface Resume {
   skills: ResumeSkills;
   languages: ResumeLanguages;
   custom: ResumeCustom;
+}
+
+// Multi-Resume Management Types
+export interface SavedResume {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  resumeData: Resume;
+  settings: any;  // 👈 Usamos 'any' por ahora para evitar imports circulares
 }
 
 export type ResumeKey = keyof Resume;

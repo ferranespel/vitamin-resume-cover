@@ -7,7 +7,7 @@ import { ResumeProfile } from "lib/redux/types";
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
-  const { name, email, phone, url, summary, location } = profile;
+  const { name, email, phone, url, summary, location, resumeName } = profile; // 👈 Añadido resumeName
 
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));
@@ -16,6 +16,17 @@ export const ProfileForm = () => {
   return (
     <BaseForm>
       <div className="grid grid-cols-6 gap-3">
+        {/* 👇 NUEVO CAMPO - Resume Name */}
+        <Input
+          label="Resume Name"
+          labelClassName="col-span-full"
+          name="resumeName"
+          placeholder="October 2025 - Software Engineer"
+          value={resumeName}
+          onChange={handleProfileChange}
+        />
+        
+        {/* Resto de campos existentes */}
         <Input
           label="Name"
           labelClassName="col-span-full"

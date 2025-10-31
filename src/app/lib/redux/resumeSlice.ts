@@ -19,6 +19,7 @@ export const initialProfile: ResumeProfile = {
   phone: "",
   location: "",
   url: "",
+  resumeName: "",  // 👈 NUEVO CAMPO
 };
 
 export const initialWorkExperience: ResumeWorkExperience = {
