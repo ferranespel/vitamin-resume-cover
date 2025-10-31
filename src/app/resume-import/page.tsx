@@ -3,6 +3,7 @@ import { getHasUsedAppBefore } from "lib/redux/local-storage";
 import { getSavedResumes } from "lib/redux/saved-resumes-storage";
 import { ResumeDropzone } from "components/ResumeDropzone";
 import { SavedResumeCard } from "components/SavedResumeCard";
+import { DataManagement } from "components/DataManagement";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { SavedResume } from "lib/redux/types";
@@ -80,7 +81,10 @@ export default function ImportResume() {
           Create New
         </Link>
       </div>
-
+      {/* 👇 NUEVO: Botones de Export/Import */}
+      <div className="mt-8">
+        <DataManagement onImportSuccess={loadSavedResumes} />
+      </div>
       {/* Grid de resumes guardados */}
       {savedResumes.length > 0 && (
         <div className="mt-12">
