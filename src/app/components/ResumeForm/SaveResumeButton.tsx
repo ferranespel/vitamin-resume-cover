@@ -23,8 +23,13 @@ export const SaveResumeButton = () => {
     setIsSaving(true);
 
     try {
-      // Guardar en saved-resumes con settings  👇
-      const savedResume = saveResume(resume.profile.resumeName, resume, settings);
+      // Guardar en saved-resumes con settings (actualiza si existe ID, sino crea nuevo)
+      const savedResume = saveResume(
+        resume.profile.resumeName, 
+        resume, 
+        settings,
+        resume.id  // 👈 NUEVO: Pasa el ID si existe
+      );
       
       // Limpiar el localStorage temporal
       localStorage.removeItem("open-resume-state");

@@ -1,32 +1,32 @@
 "use client";
-import { SavedResume } from "lib/redux/types";
-import { formatUpdateDate, deleteResume } from "lib/redux/saved-resumes-storage";
+import { SavedCoverLetter } from "lib/redux/types";
+import { formatUpdateDate, deleteCoverLetter } from "lib/redux/saved-cover-letters-storage";
 import { useRouter } from "next/navigation";
 import { ArrowDownTrayIcon, TrashIcon } from "@heroicons/react/24/outline";
 import dynamic from "next/dynamic";
 
-// Importar ResumePDF dinámicamente para evitar errores de SSR
-const ResumePDF = dynamic(
-  () => import("components/Resume/ResumePDF").then((mod) => mod.ResumePDF),
+// Importar CoverLetterPDF dinámicamente para evitar errores de SSR
+const CoverLetterPDF = dynamic(
+  () => import("components/CoverLetter/CoverLetterPDF").then((mod) => ({ default: mod.CoverLetterPDF })),
   { ssr: false }
 );
 
-interface SavedResumeCardProps {
-  savedResume: SavedResume;
+interface SavedCoverLetterCardProps {
+  savedCoverLetter: SavedCoverLetter;
   onDelete: () => void;
 }
 
-export const SavedResumeCard = ({ savedResume, onDelete }: SavedResumeCardProps) => {
+export const SavedCoverLetterCard = ({ savedCoverLetter, onDelete }: SavedCoverLetterCardProps) => {
   const router = useRouter();
-  const { id, name, updatedAt, resumeData, settings } = savedResume;  // 👈 AÑADIR settings
+  const { id, name, updatedAt, coverLetterData, settings } = savedCoverLetter;
 
   const handleEdit = () => {
-    // Cargar el resume Y settings en localStorage con ID
+    // Cargar la cover letter en localStorage y navegar al builder
     localStorage.setItem("open-resume-state", JSON.stringify({
-      resume: { ...resumeData, id },  // 👈 INCLUIR EL ID
+      coverLetter: { ...coverLetterData, id },  // 👈 INCLUIR EL ID
       settings: settings
     }));
-    router.push("/resume-builder");
+    router.push("/cover-letter-builder");
   };
 
   const handleDownload = async () => {
@@ -34,9 +34,9 @@ export const SavedResumeCard = ({ savedResume, onDelete }: SavedResumeCardProps)
       // Generar el PDF usando react-pdf
       const { pdf } = await import("@react-pdf/renderer");
       const blob = await pdf(
-        <ResumePDF 
-          resume={resumeData} 
-          settings={settings}  // 👈 PASAR SETTINGS AL PDF
+        <CoverLetterPDF 
+          coverLetter={coverLetterData} 
+          settings={settings}
           isPDF={true} 
         />
       ).toBlob();
@@ -57,7 +57,7 @@ export const SavedResumeCard = ({ savedResume, onDelete }: SavedResumeCardProps)
 
   const handleDelete = () => {
     if (confirm(`Are you sure you want to delete "${name}"?`)) {
-      deleteResume(id);
+      deleteCoverLetter(id);
       onDelete();
     }
   };
@@ -70,9 +70,14 @@ export const SavedResumeCard = ({ savedResume, onDelete }: SavedResumeCardProps)
         className="cursor-pointer mb-4 aspect-[8.5/11] overflow-hidden rounded border border-gray-200 bg-gray-50 h-64"
       >
         <div className="scale-[0.2] origin-top-left w-[500%] h-[500%] pointer-events-none">
-          <ResumePDF resume={resumeData} settings={settings} isPDF={false} />
+          <CoverLetterPDF 
+            coverLetter={coverLetterData} 
+            settings={settings}
+            isPDF={false} 
+          />
         </div>
       </div>
+
       {/* Título - clickeable para editar */}
       <h3 
         onClick={handleEdit}

@@ -48,6 +48,7 @@ export interface ResumeCustom {
 }
 
 export interface Resume {
+  id?: string;  // 👈 NUEVO: ID opcional para trackear resumes guardados
   profile: ResumeProfile;
   workExperiences: ResumeWorkExperience[];
   educations: ResumeEducation[];
@@ -65,6 +66,41 @@ export interface SavedResume {
   updatedAt: string;
   resumeData: Resume;
   settings: any;  // 👈 Usamos 'any' por ahora para evitar imports circulares
+}
+
+// Cover Letter Types
+export interface CoverLetterPersonalDetails {
+  coverName: string;        // Nombre de la carta (ej: "Google - Software Engineer")
+  name: string;             // Tu nombre completo
+  jobTitle: string;         // El puesto al que aplicas
+  address: string;          // Tu dirección
+  phone: string;            // Teléfono
+  email: string;            // Email
+}
+
+export interface CoverLetterEmployerDetails {
+  companyName: string;      // Nombre de la empresa
+  hiringManagerName: string; // Nombre del reclutador/manager
+}
+
+export interface CoverLetterContent {
+  coverText: string;        // Contenido principal (soporta markdown)
+}
+
+export interface CoverLetter {
+  id?: string;  // 👈 NUEVO: ID opcional para trackear cover letters guardadas
+  personalDetails: CoverLetterPersonalDetails;
+  employerDetails: CoverLetterEmployerDetails;
+  content: CoverLetterContent;
+}
+
+export interface SavedCoverLetter {
+  id: string;
+  name: string;             // Usaremos coverName
+  createdAt: string;
+  updatedAt: string;
+  coverLetterData: CoverLetter;
+  settings: any;            // Reutilizamos settings (colores, fonts, etc)
 }
 
 export type ResumeKey = keyof Resume;

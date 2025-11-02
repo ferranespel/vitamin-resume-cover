@@ -1,23 +1,26 @@
 import { getSavedResumes } from "./saved-resumes-storage";
-import type { SavedResume } from "./types";
+import { getSavedCoverLetters } from "./saved-cover-letters-storage"; // 👈 NUEVO
+import type { SavedResume, SavedCoverLetter } from "./types"; // 👈 ACTUALIZADO
 
 export interface ExportData {
   version: string;
   exportDate: string;
   resumes: SavedResume[];
-  // coverLetters: SavedCoverLetter[];  // Lo añadiremos en Phase 2
+  coverLetters: SavedCoverLetter[];  // 👈 NUEVO
 }
 
 /**
- * Exporta todos los resumes a un archivo JSON descargable
+ * Exporta todos los resumes y cover letters a un archivo JSON descargable
  */
 export const exportAllData = () => {
   const resumes = getSavedResumes();
+  const coverLetters = getSavedCoverLetters(); // 👈 NUEVO
   
   const exportData: ExportData = {
     version: "1.0.0",
     exportDate: new Date().toISOString(),
     resumes: resumes,
+    coverLetters: coverLetters, // 👈 NUEVO
   };
 
   // Crear blob con el JSON
@@ -30,13 +33,10 @@ export const exportAllData = () => {
   link.href = url;
   
   // Nombre del archivo con fecha
-  const date = new Date().toISOString().split('T')[0]; // 2025-10-31
+  const date = new Date().toISOString().split('T')[0];
   link.download = `vitamin-resume-backup-${date}.json`;
   
-  // Trigger download
   link.click();
-  
-  // Cleanup
   URL.revokeObjectURL(url);
   
   return exportData;
@@ -49,6 +49,7 @@ export const importDataFromJSON = (jsonString: string): {
   success: boolean;
   message: string;
   resumesCount?: number;
+  coverLettersCount?: number; // 👈 NUEVO
 } => {
   try {
     const data = JSON.parse(jsonString) as ExportData;
@@ -64,10 +65,16 @@ export const importDataFromJSON = (jsonString: string): {
     // Guardar resumes en localStorage
     localStorage.setItem("saved-resumes", JSON.stringify(data.resumes));
     
+    // Guardar cover letters si existen (retrocompatibilidad) 👇 NUEVO
+    if (data.coverLetters && Array.isArray(data.coverLetters)) {
+      localStorage.setItem("saved-cover-letters", JSON.stringify(data.coverLetters));
+    }
+    
     return {
       success: true,
-      message: `Successfully imported ${data.resumes.length} resume(s)`,
+      message: `Successfully imported ${data.resumes.length} resume(s) and ${data.coverLetters?.length || 0} cover letter(s)`,
       resumesCount: data.resumes.length,
+      coverLettersCount: data.coverLetters?.length || 0, // 👈 NUEVO
     };
   } catch (error) {
     console.error("Error importing data:", error);

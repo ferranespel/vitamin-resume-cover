@@ -82,9 +82,9 @@ export const getSavedResumes = (): SavedResume[] => {
       localStorage.setItem(SAVED_RESUMES_KEY, JSON.stringify(migratedResumes));
     }
     
-    // Ordenar por fecha de actualización (más reciente primero)
+    // Ordenar por ID (más reciente primero - IDs contienen timestamp)
     return migratedResumes.sort((a, b) => 
-      new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      b.id.localeCompare(a.id)
     );
   } catch (e) {
     console.error("Error loading saved resumes:", e);

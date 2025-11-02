@@ -11,12 +11,16 @@ import {
 } from "lib/redux/local-storage";
 import { initialResumeState, setResume } from "lib/redux/resumeSlice";
 import {
+  initialCoverLetterState,
+  setCoverLetter,
+} from "lib/redux/coverLetterSlice"; // 👈 NUEVO
+import {
   initialSettings,
   setSettings,
   type Settings,
 } from "lib/redux/settingsSlice";
 import { deepMerge } from "lib/deep-merge";
-import type { Resume } from "lib/redux/types";
+import type { Resume, CoverLetter } from "lib/redux/types"; // 👈 AÑADIDO CoverLetter
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -38,6 +42,7 @@ export const useSetInitialStore = () => {
   useEffect(() => {
     const state = loadStateFromLocalStorage();
     if (!state) return;
+    
     if (state.resume) {
       // We merge the initial state with the stored state to ensure
       // backward compatibility, since new fields might be added to
@@ -48,6 +53,16 @@ export const useSetInitialStore = () => {
       ) as Resume;
       dispatch(setResume(mergedResumeState));
     }
+    
+    // 👇 NUEVO: Cargar coverLetter desde localStorage
+    if (state.coverLetter) {
+      const mergedCoverLetterState = deepMerge(
+        initialCoverLetterState,
+        state.coverLetter
+      ) as CoverLetter;
+      dispatch(setCoverLetter(mergedCoverLetterState));
+    }
+    
     if (state.settings) {
       const mergedSettingsState = deepMerge(
         initialSettings,
